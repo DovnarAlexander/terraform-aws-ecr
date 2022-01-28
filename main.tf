@@ -94,10 +94,12 @@ data "aws_iam_policy_document" "resource_readonly_access" {
     sid    = "ReadonlyAccess"
     effect = "Allow"
 
-    principals {
-      type = "AWS"
-
-      identifiers = var.principals_readonly_access
+    dynamic "principals" {
+      for_each = toset(var.principals_readonly_access)
+      content {
+        type = lookup(principals.value, "type", "AWS")
+        identifiers = lookup(principals.value, "identifiers", var.principals_readonly_access)
+      }
     }
 
     actions = [
@@ -123,10 +125,12 @@ data "aws_iam_policy_document" "resource_full_access" {
     sid    = "FullAccess"
     effect = "Allow"
 
-    principals {
-      type = "AWS"
-
-      identifiers = var.principals_full_access
+    dynamic "principals" {
+      for_each = toset(var.principals_full_access)
+      content {
+        type = lookup(principals.value, "type", "AWS")
+        identifiers = lookup(principals.value, "identifiers", var.principals_full_access)
+      }
     }
 
     actions = ["ecr:*"]

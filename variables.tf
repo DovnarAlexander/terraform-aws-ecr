@@ -5,15 +5,13 @@ variable "use_fullname" {
 }
 
 variable "principals_full_access" {
-  type        = list(string)
-  description = "Principal ARNs to provide with full access to the ECR"
-  default     = []
+  type        = list(any)
+  description = "Service or AWS principals to provide with full access to the ECR"
 }
 
 variable "principals_readonly_access" {
-  type        = list(string)
-  description = "Principal ARNs to provide with readonly access to the ECR"
-  default     = []
+  type        = list(any)
+  description = "Service or AWS principals to provide with readonly access to the ECR"
 }
 
 variable "scan_images_on_push" {
